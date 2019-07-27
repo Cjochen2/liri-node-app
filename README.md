@@ -40,7 +40,7 @@ Spotify This returns information on the artist album song and if available a sam
 
 ## Do What It Says:
 
-![Do What](/images/Do-What-It-Says.JPG)
+![Do What](/images/Do-What-It Says.JPG)
 
 This command takes input from the random.txt file and runs it through the above scenarios dependning on the command and search query. In the image above I changed the random.txt file in between the two instances in which I ran do what it says. The first instance random.txt read 'spotify-this-song,"I Want It That Way"' the second read 'movie-this,"The Return of the King"'. This command reads and breaks up the txt file and then inputs it into the formula to run and generate results like the one's above.
 
