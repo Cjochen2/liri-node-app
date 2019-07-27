@@ -14,6 +14,6 @@ Prior to using LIRI you will need to install the following npm packages and prov
 
    * [DotEnv](https://www.npmjs.com/package/dotenv)
 
-##Movie This:
+## Movie This:
 
-![Movie This](Movie-This.JPG)
+![Movie This](../Movie-This.JPG)
