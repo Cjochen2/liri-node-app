@@ -16,4 +16,4 @@ Prior to using LIRI you will need to install the following npm packages and prov
 
 ## Movie This:
 
-![Movie This](\images\Movie-This.JPG)
+![Movie This](/images/Movie-This.JPG)
