@@ -6,20 +6,10 @@ var moment = require('moment')
 var fs = require('fs');
 
 var spotify = new Spotify(keys.spotify);
-var nodeArgs = process.argv;
+
 var arg1 = process.argv[2];
-var arg2 = "";
+var arg2 = process.argv.splice(3).join(' ');
 
-for (var i = 3; i < nodeArgs.length; i++) {
-
-    if (i > 3 && i < nodeArgs.length) {
-        arg2 = arg2 + "+" + nodeArgs[i];
-    }
-    else {
-        arg2 += nodeArgs[i];
-
-    }
-};
 
 switch (arg1) {
     case 'movie-this':
@@ -34,45 +24,51 @@ switch (arg1) {
     case 'do-what-it-says':
         dowhat(arg2);
         break;
+    default:
+        console.log('input should look like: node liri.js (movie-this || concert-this || spotify-this-song || do-what-it-says) <input search>')
 }
 
 
 function movies(arg2) {
-    if(arg2 === ''){
+    if (!arg2) {
         movies('Mr.Nobody')
     } else {
-    var queryUrl = 'http://www.omdbapi.com/?t=' + arg2 + '&y=&plot=short&apikey=trilogy';
-    console.log(queryUrl);
+        var queryUrl = 'http://www.omdbapi.com/?t=' + arg2 + '&y=&plot=short&apikey=trilogy';
+        console.log(queryUrl);
 
-    axios.get(queryUrl).then(
-        function (response) {
+        axios.get(queryUrl).then(
+            function (response) {
 
-            var data = response.data;
+                var data = response.data;
 
-            console.log('Movie Title: ' + data.Title + '\nRelease Year: ' + data.Year + '\nThe IMBD movie rating is: ' + data.imdbRating + '\nThe Metacritic rating is: ' + data.Metascore + '\nCountry(s) where the movie was produced: ' + data.Country + '\nLanguages of the movie: ' + data.Language + '\nPlot: ' + data.Plot + '\nCast: ' + data.Actors);
-        }
-    )
+                console.log('Movie Title: ' + data.Title + '\nRelease Year: ' + data.Year + '\nThe IMBD movie rating is: ' + data.imdbRating + '\nThe Metacritic rating is: ' + data.Metascore + '\nCountry(s) where the movie was produced: ' + data.Country + '\nLanguages of the movie: ' + data.Language + '\nPlot: ' + data.Plot + '\nCast: ' + data.Actors);
+            }
+        )
     }
 };
 
 function concert(arg2) {
-    var queryUrl = 'https://rest.bandsintown.com/artists/' + arg2 + '/events?app_id=codingbootcamp';
-    console.log(queryUrl);
+    if (!arg2) {
+        concert('Maroon 5')
+    } else {
+        var queryUrl = 'https://rest.bandsintown.com/artists/' + arg2 + '/events?app_id=codingbootcamp';
+        console.log(queryUrl);
 
-    axios.get(queryUrl).then(
-        function (response) {
-            var data = response.data;
+        axios.get(queryUrl).then(
+            function (response) {
+                var data = response.data;
 
-            for (i = 0; i < data.length; i++) {
-                console.log('\nVenue: ' + data[i].venue.name + '\nLocation: ' + data[i].venue.city + '\nDate: ' + moment(data[i].datetime, 'YYYY-MM-DD HH:mm').format('MM/DD/YYYY'));
+                for (i = 0; i < data.length; i++) {
+                    console.log('\nVenue: ' + data[i].venue.name + '\nLocation: ' + data[i].venue.city + '\nDate: ' + moment(data[i].datetime, 'YYYY-MM-DD HH:mm').format('MM/DD/YYYY'));
+                }
             }
-        }
-    )
+        )
+    }
 };
 
 function spots(arg2) {
-    if (arg2 === "") {
-        spots("The Sign")
+    if (!arg2) {
+        spots("The Sign Ace of Base")
     } else {
         spotify
             .search({ type: 'track', query: arg2 })
